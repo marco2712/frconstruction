@@ -1,17 +1,9 @@
 import React from "react";
 import { ChevronRight } from "lucide-react";
-
-interface HeroTranslations {
-  hero: {
-    title: string;
-    subtitle: string;
-    cta: string;
-  };
-  tagline: string;
-}
+import type { Translations } from '../../types';
 
 interface HeroProps {
-  t: HeroTranslations;
+  t: Translations;
   scrollToSection: (section: string) => void;
 }
 
@@ -29,13 +21,13 @@ export const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
         }}
       />
 
-      {/* Dark overlay (lighter) */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/30" />
 
-      {/* Gradient overlay (lighter) */}
+      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40" />
 
-      {/* CONTENT */}
+      {/* Content */}
       <div className="container mx-auto px-[5vw] text-center relative z-10 pt-[8vh]">
         <div className="animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
@@ -55,6 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
             className="group px-8 py-4 cta-btn rounded-lg
                        font-bold text-lg hover:bg-yellow-500 transition
                        transform hover:scale-105 inline-flex items-center space-x-2"
+            aria-label={t.hero.cta}
           >
             <span>{t.hero.cta}</span>
             <ChevronRight className="group-hover:translate-x-1 transition" />

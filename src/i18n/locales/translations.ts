@@ -1,4 +1,6 @@
-export const translations = {
+import type { TranslationsMap } from '../types';
+
+export const translations: TranslationsMap = {
   en: {
     companyName: "Golden Hand Services",
     tagline: "One Call. We Handle It All.",
@@ -53,7 +55,7 @@ export const translations = {
           "Cabinet installation",
           "Shelving installation",
           "Door and window repairs"    
-            ]
+        ]
       },
       interior: {
         title: "Interior Home Improvements",
@@ -94,24 +96,23 @@ export const translations = {
     testimonials: {
       title: "Testimonials",
       items: [
-  {
-    quote: "They finished my project on time and exceeded my expectations. Professional work from start to finish.",
-    name: "Emily R."
-  },
-  {
-    quote: "Fast, professional, and very easy to work with. I’ll definitely call them again.",
-    name: "Carlos M."
-  },
-  {
-    quote: "Great quality work at a fair price. Everything was done exactly as promised.",
-    name: "Sofia G."
-  },
-  {
-    quote: "Highly recommended for repairs and home improvements. Reliable and trustworthy service.",
-    name: "John P."
-  }
-]
-
+        {
+          quote: "They finished my project on time and exceeded my expectations. Professional work from start to finish.",
+          name: "Emily R."
+        },
+        {
+          quote: "Fast, professional, and very easy to work with. I'll definitely call them again.",
+          name: "Carlos M."
+        },
+        {
+          quote: "Great quality work at a fair price. Everything was done exactly as promised.",
+          name: "Sofia G."
+        },
+        {
+          quote: "Highly recommended for repairs and home improvements. Reliable and trustworthy service.",
+          name: "John P."
+        }
+      ]
     },
     footer: {
       rights: "All rights reserved",
@@ -213,24 +214,23 @@ export const translations = {
     testimonials: {
       title: "Testimonios",
       items: [
-  {
-    quote: "Terminaron mi proyecto a tiempo y superaron mis expectativas. Trabajo muy profesional de principio a fin.",
-    name: "Emily R."
-  },
-  {
-    quote: "Rápidos, profesionales y muy fáciles de tratar. Sin duda los volveré a llamar.",
-    name: "Carlos M."
-  },
-  {
-    quote: "Excelente calidad a un precio justo. Todo quedó tal como lo prometieron.",
-    name: "Sofia G."
-  },
-  {
-    quote: "Totalmente recomendados para reparaciones y mejoras del hogar. Servicio confiable y honesto.",
-    name: "John P."
-  }
-]
-
+        {
+          quote: "Terminaron mi proyecto a tiempo y superaron mis expectativas. Trabajo muy profesional de principio a fin.",
+          name: "Emily R."
+        },
+        {
+          quote: "Rápidos, profesionales y muy fáciles de tratar. Sin duda los volveré a llamar.",
+          name: "Carlos M."
+        },
+        {
+          quote: "Excelente calidad a un precio justo. Todo quedó tal como lo prometieron.",
+          name: "Sofia G."
+        },
+        {
+          quote: "Totalmente recomendados para reparaciones y mejoras del hogar. Servicio confiable y honesto.",
+          name: "John P."
+        }
+      ]
     },
     footer: {
       rights: "Todos los derechos reservados",

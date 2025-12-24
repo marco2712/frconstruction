@@ -1,0 +1,31 @@
+/* ========================================
+   COMPONENT SPECIFIC STYLES
+   ======================================== */
+
+/* CTA Button - stays visible under dark themes */
+.cta-btn {
+  color-scheme: light;
+  background-color: #facc15 !important; /* yellow-400 */
+  color: #111827 !important; /* gray-900 */
+  mix-blend-mode: normal;
+}
+
+.cta-btn:hover {
+  background-color: #fbbf24 !important; /* yellow-500 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .cta-btn {
+    background-color: #fde047 !important; /* yellow-300 for better contrast on dark */
+    color: #111827 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .cta-btn {
+    forced-color-adjust: none;
+    background-color: ButtonFace !important;
+    color: ButtonText !important;
+    border: 1px solid; 
+  }
+}

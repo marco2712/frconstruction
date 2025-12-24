@@ -1,23 +1,10 @@
 import { useState } from "react";
 import { Home, Hammer, Wrench, Paintbrush, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-interface ServiceItem {
-  title: string;
-  items: string[];
-}
-
-interface ServicesTranslations {
-  services: {
-    residential: ServiceItem;
-    construction: ServiceItem;
-    handyman: ServiceItem;
-    interior: ServiceItem;
-  };
-}
+import type { Translations } from '../../types';
 
 interface ServicesProps {
-  t: ServicesTranslations;
+  t: Translations;
 }
 
 export const Services: React.FC<ServicesProps> = ({ t }) => {
@@ -38,11 +25,10 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <h2 className="text-5xl font-bold mb-6">
-          What do you need help with?
+          {t.services.title}
         </h2>
         <p className="text-gray-400 mb-16 max-w-xl">
-          Select a service to see details and get a quote.
-          <span className="text-yellow-400"> One call. We handle it all.</span>
+          <span className="text-yellow-400">{t.tagline}</span>
         </p>
 
         {/* Cards */}
@@ -65,7 +51,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                   }
                 `}
               >
-                {/* OVERLAY CLICK / TAP */}
+                {/* Overlay for inactive cards */}
                 <AnimatePresence>
                   {!isActive && (
                     <motion.div
@@ -84,7 +70,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                   )}
                 </AnimatePresence>
 
-                {/* CARD HEADER */}
+                {/* Card Header */}
                 <div className="flex items-center gap-4">
                   <div className={`p-3 rounded-xl ${service.accent}`}>
                     <Icon className="w-7 h-7 text-white" />
@@ -94,7 +80,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                   </h3>
                 </div>
 
-                {/* EXPANDED CONTENT */}
+                {/* Expanded Content */}
                 <AnimatePresence>
                   {isActive && (
                     <motion.div
@@ -110,16 +96,18 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                         ))}
                       </ul>
 
-                            <button
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
+                          // Update with actual phone number
                           window.open(
                             `https://wa.me/1XXXXXXXXXX?text=Hello,%20I%20need%20${service.data.title}`,
                             "_blank"
                           );
                         }}
-                              className="mt-6 w-full cta-btn text-black font-bold py-3 rounded-xl
-                                         flex items-center justify-center gap-2 transition"
+                        className="mt-6 w-full cta-btn text-black font-bold py-3 rounded-xl
+                                   flex items-center justify-center gap-2 transition hover:scale-105"
+                        aria-label={`Get quote for ${service.data.title}`}
                       >
                         Get Quote <ArrowRight />
                       </button>

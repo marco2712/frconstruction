@@ -1,0 +1,4 @@
+/* Main stylesheet - imports all style modules */
+@import './global.css';
+@import './components.css';
+@import './animations.css';
