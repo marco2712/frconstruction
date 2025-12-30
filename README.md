@@ -2,16 +2,16 @@
 
 Sitio web profesional para servicios de construcción y mantenimiento, construido con **Astro** y **Tailwind CSS**.
 
-## 🚀 Características
+## Características
 
-- ✨ Sitio estático ultra-rápido con Astro
-- 🎨 Diseño responsive con Tailwind CSS 4
-- 🌐 Soporte multiidioma (Inglés/Español)
-- 📱 Optimizado para móviles
-- 🎭 Animaciones CSS suaves
-- 🔍 SEO optimizado
+- Sitio estático ultra-rápido con Astro
+- Diseño responsive con Tailwind CSS 4
+- Soporte multiidioma (Inglés/Español)
+- Optimizado para móviles
+- Animaciones CSS suaves
+- SEO optimizado
 
-## 📦 Instalación
+## Instalación
 
 1. **Instalar dependencias:**
 
@@ -39,7 +39,7 @@ npm run build
 npm run preview
 ```
 
-## 🏗️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
@@ -69,14 +69,14 @@ src/
     └── astro-helpers.ts
 ```
 
-## 🌍 Cambiar Idioma
+## Cambiar Idioma
 
 El idioma se puede cambiar agregando el parámetro `?lang=es` o `?lang=en` a la URL:
 
 - Inglés: `http://localhost:4321/?lang=en`
 - Español: `http://localhost:4321/?lang=es`
 
-## 🎨 Personalización
+## Personalización
 
 ### Colores
 
@@ -90,20 +90,20 @@ Las traducciones se encuentran en `src/i18n/locales/translations.ts`.
 
 Las imágenes deben colocarse en la carpeta `public/images/`.
 
-## 📝 Scripts Disponibles
+## Scripts Disponibles
 
 - `npm run dev` - Inicia el servidor de desarrollo
 - `npm run build` - Construye el sitio para producción
 - `npm run preview` - Previsualiza la build de producción
 - `npm run astro` - Ejecuta comandos CLI de Astro
 
-## 🔧 Tecnologías
+## Tecnologías
 
 - [Astro](https://astro.build) - Framework web moderno
 - [Tailwind CSS](https://tailwindcss.com) - Framework CSS utility-first
 - [TypeScript](https://www.typescriptlang.org) - JavaScript con tipos
 - [Lucide Icons](https://lucide.dev) - Iconos SVG
 
-## 📄 Licencia
+## Licencia
 
 Privado - © 2025 Golden Hand Services
