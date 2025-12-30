@@ -375,7 +375,7 @@ const navItems = [
     closeIcon?.classList.toggle('hidden');
   });
 
-  // Smooth scroll y cerrar menú móvil
+
   document.querySelectorAll('[data-nav-link], [data-mobile-nav-link], [data-scroll-to]').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -399,36 +399,35 @@ const navItems = [
   function changeLang(newLang: string) {
     const url = new URL(window.location.href);
     url.searchParams.set('lang', newLang);
-    window.location.href = url.toString();
+    // Forzar recarga completa sin caché
+    window.location.replace(url.toString());
   }
 
-  document.querySelectorAll('[data-lang], [data-lang-mobile]').forEach(btn => {
+  // Handle desktop language option clicks
+  document.querySelectorAll('[data-lang]').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const lang = (e.currentTarget as HTMLElement).getAttribute('data-lang') 
-                || (e.currentTarget as HTMLElement).getAttribute('data-lang-mobile');
-      if (lang) {
-        changeLang(lang);
-        // Close dropdowns after selection
-        langMenu?.classList.remove('open');
-        langMenuButton?.setAttribute('aria-expanded', 'false');
-        langMenuMobile?.classList.remove('open');
-        langMenuMobileButton?.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-
-  // Handle language option clicks
-  document.querySelectorAll('.lang-option, .lang-option-mobile').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const lang = (e.currentTarget as HTMLElement).getAttribute('data-lang-mobile') 
-                || (e.currentTarget as HTMLElement).getAttribute('data-lang');
+      e.preventDefault();
+      e.stopPropagation();
+      const lang = (e.currentTarget as HTMLElement).getAttribute('data-lang');
       if (lang) {
         changeLang(lang);
       }
     });
   });
 
-  // Intersection Observer para active links
+  // Handle mobile language option clicks
+  document.querySelectorAll('[data-lang-mobile]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const lang = (e.currentTarget as HTMLElement).getAttribute('data-lang-mobile');
+      if (lang) {
+        changeLang(lang);
+      }
+    });
+  });
+
+
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('[data-nav-link]');
   const mobileNavLinks = document.querySelectorAll('[data-mobile-nav-link]');
