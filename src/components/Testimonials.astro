@@ -1,0 +1,165 @@
+---
+import type { Translations } from '../types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+
+const testimonials = t.testimonials.items || [];
+---
+
+<section id="testimonials" class="py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-10">
+      {t.testimonials.title}
+    </h2>
+
+    {testimonials.length > 0 && (
+      <div class="testimonial-carousel relative" role="region" aria-label={t.testimonials.title}>
+        <div class="overflow-hidden">
+          <div class="testimonial-track flex transition-transform duration-500 ease-out">
+            {testimonials.map((item, index) => (
+              <div 
+                class="testimonial-slide w-full flex-shrink-0 px-2"
+                data-index={index}
+              >
+                <figure class="p-6 rounded-2xl border border-gray-200 shadow-sm bg-white h-[220px] sm:h-[200px] md:h-[180px] flex flex-col justify-between">
+                  <blockquote class="text-gray-700 italic leading-relaxed text-lg text-center">
+                    "{item.quote}"
+                  </blockquote>
+                  <figcaption class="mt-6 text-sm font-semibold text-gray-900 text-center">
+                    — {item.name}
+                  </figcaption>
+                </figure>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {testimonials.length > 1 && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous testimonial"
+              class="testimonial-prev absolute -left-3 top-1/2 -translate-y-1/2 px-3 py-2 rounded-full bg-gray-900 text-white/90 hover:text-white shadow-md transition-colors"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              aria-label="Next testimonial"
+              class="testimonial-next absolute -right-3 top-1/2 -translate-y-1/2 px-3 py-2 rounded-full bg-gray-900 text-white/90 hover:text-white shadow-md transition-colors"
+            >
+              ›
+            </button>
+
+            <div class="flex justify-center mt-6 space-x-2">
+              {testimonials.map((_, index) => (
+                <button
+                  type="button"
+                  class="testimonial-dot w-2 h-2 rounded-full bg-gray-300 transition-colors"
+                  data-index={index}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  const carousel = document.querySelector('.testimonial-carousel');
+  if (carousel) {
+    const track = carousel.querySelector('.testimonial-track') as HTMLElement;
+    const slides = Array.from(carousel.querySelectorAll('.testimonial-slide'));
+    const prevBtn = carousel.querySelector('.testimonial-prev');
+    const nextBtn = carousel.querySelector('.testimonial-next');
+    const dots = Array.from(carousel.querySelectorAll('.testimonial-dot'));
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoplayInterval: number;
+    let isPaused = false;
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Actualizar dots
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('bg-gray-900');
+          dot.classList.remove('bg-gray-300');
+        } else {
+          dot.classList.remove('bg-gray-900');
+          dot.classList.add('bg-gray-300');
+        }
+      });
+    }
+
+    function goToSlide(index: number) {
+      currentIndex = (index % totalSlides + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    function nextSlide() {
+      goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentIndex - 1);
+    }
+
+    function startAutoplay() {
+      if (totalSlides <= 1) return;
+      autoplayInterval = window.setInterval(() => {
+        if (!isPaused) {
+          nextSlide();
+        }
+      }, 5000);
+    }
+
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+    }
+
+    // Event listeners
+    prevBtn?.addEventListener('click', () => {
+      prevSlide();
+      stopAutoplay();
+      startAutoplay();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      nextSlide();
+      stopAutoplay();
+      startAutoplay();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        stopAutoplay();
+        startAutoplay();
+      });
+    });
+
+    carousel.addEventListener('mouseenter', () => {
+      isPaused = true;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+      isPaused = false;
+    });
+
+    // Iniciar
+    updateCarousel();
+    startAutoplay();
+  }
+</script>

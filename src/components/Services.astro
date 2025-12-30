@@ -1,0 +1,114 @@
+---
+import { Home as HomeIcon, Hammer, Wrench, Paintbrush } from 'lucide-astro';
+import type { Translations } from '../types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+
+const services = [
+  { data: t.services.residential, Icon: HomeIcon, accent: 'bg-blue-600' },
+  { data: t.services.construction, Icon: Hammer, accent: 'bg-yellow-500' },
+  { data: t.services.handyman, Icon: Wrench, accent: 'bg-gray-800' },
+  { data: t.services.interior, Icon: Paintbrush, accent: 'bg-blue-700' },
+];
+---
+
+<section id="services" class="py-28 bg-black text-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-5xl font-bold mb-6">
+      {t.services.title}
+    </h2>
+    <p class="text-gray-400 mb-16 max-w-xl">
+      <span class="text-yellow-400">{t.tagline}</span>
+    </p>
+
+    <div class="grid md:grid-cols-4 gap-6">
+      {services.map((service, i) => (
+        <div
+          data-service-card={i}
+          class="service-card relative overflow-hidden cursor-pointer rounded-3xl p-6 border border-white/10 opacity-80 transition-all hover:scale-105"
+        >
+          <!-- Overlay para cards inactivas -->
+          <div class="card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity">
+            <service.Icon class="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-yellow-400 mb-2 sm:mb-3" />
+            <span class="uppercase tracking-widest text-sm text-yellow-400">Click</span>
+          </div>
+
+          <!-- Card Header -->
+          <div class="flex items-center gap-4">
+            <div class={`p-3 rounded-xl ${service.accent}`}>
+              <service.Icon class="w-7 h-7 text-white" />
+            </div>
+            <h3 class="text-xl font-semibold">
+              {service.data.title}
+            </h3>
+          </div>
+
+          <!-- Expanded Content -->
+          <div class="card-content mt-6 opacity-0 max-h-0 overflow-hidden transition-all">
+            <ul class="space-y-3 text-gray-300">
+              {service.data.items.map((item) => (
+                <li>• {item}</li>
+              ))}
+            </ul>
+
+            <button
+              data-scroll-to="contact"
+              class="mt-6 w-full px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-bold hover:bg-yellow-500 transition"
+            >
+              {t.hero.cta}
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-card.active {
+    @apply border-yellow-400 scale-105 opacity-100;
+  }
+
+  .service-card.active .card-overlay {
+    @apply opacity-0 pointer-events-none;
+  }
+
+  .service-card.active .card-content {
+    @apply opacity-100 max-h-[500px];
+  }
+</style>
+
+<script>
+  // Manejo interactivo de las tarjetas de servicio
+  const cards = document.querySelectorAll('[data-service-card]');
+  
+  // Activar la primera card por defecto
+  if (cards.length > 0) {
+    cards[0].classList.add('active');
+  }
+
+  cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      // Remover active de todas las cards
+      cards.forEach(c => c.classList.remove('active'));
+      // Agregar active a la card clickeada
+      card.classList.add('active');
+    });
+  });
+
+  // Smooth scroll para los botones
+  document.querySelectorAll('[data-scroll-to]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const target = (e.currentTarget as HTMLElement).getAttribute('data-scroll-to');
+      if (target) {
+        const element = document.getElementById(target);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>

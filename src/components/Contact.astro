@@ -1,0 +1,55 @@
+---
+import { Phone, Mail, MapPin } from 'lucide-astro';
+import type { Translations } from '../types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="contact" class="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white">
+  <div class="container mx-auto px-[5vw] text-center">
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">{t.contact.title}</h2>
+    <p class="text-xl text-gray-300 mb-12">{t.contact.subtitle}</p>
+    
+    <div class="flex flex-col md:flex-row items-center justify-center space-y-[1.2vw] md:space-y-0 md:space-x-[1.5vw] mb-[3vw]">
+      <a 
+        href="tel:+1234567890" 
+        class="group px-8 py-4 bg-yellow-400 text-gray-900 rounded-lg font-bold text-lg hover:bg-yellow-500 transition transform hover:scale-105 inline-flex items-center space-x-2"
+        aria-label="Call us"
+      >
+        <Phone class="w-5 h-5" />
+        <span>{t.contact.cta}</span>
+      </a>
+      <a 
+        href="mailto:info@frconstruction.com" 
+        class="group px-8 py-4 bg-white text-gray-900 rounded-lg font-bold text-lg hover:bg-gray-100 transition transform hover:scale-105 inline-flex items-center space-x-2"
+        aria-label="Send us an email"
+      >
+        <Mail class="w-5 h-5" />
+        <span>{t.contact.email}</span>
+      </a>
+    </div>
+
+    <div class="max-w-2xl mx-auto space-y-4 text-gray-300">
+      <div class="flex items-center justify-center space-x-3">
+        <Phone class="w-6 h-6 text-yellow-400" />
+        <a href="tel:+1234567890" class="text-lg hover:text-yellow-400 transition">
+          +1 (234) 567-8900
+        </a>
+      </div>
+      <div class="flex items-center justify-center space-x-3">
+        <Mail class="w-6 h-6 text-yellow-400" />
+        <a href="mailto:info@frconstruction.com" class="text-lg hover:text-yellow-400 transition">
+          info@frconstruction.com
+        </a>
+      </div>
+      <div class="flex items-center justify-center space-x-3">
+        <MapPin class="w-6 h-6 text-yellow-400" />
+        <span class="text-lg">Cali, Valle del Cauca, Colombia</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,258 @@
+---
+import { Home, Wrench, MessageSquare, Info, Phone, Menu, X, Globe, Hammer } from 'lucide-astro';
+import type { Language, SectionId, Translations } from '../types';
+
+interface Props {
+  t: Translations;
+  lang: Language;
+}
+
+const { t, lang } = Astro.props;
+
+const navItems = [
+  { id: 'home', label: t.nav.home, Icon: Home },
+  { id: 'services', label: t.nav.services, Icon: Wrench },
+  { id: 'testimonials', label: t.nav.testimonials, Icon: MessageSquare },
+  { id: 'about', label: t.nav.about, Icon: Info },
+  { id: 'contact', label: t.nav.contact, Icon: Phone },
+];
+---
+
+<header class="navbar fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-lg border-b border-yellow-400/20 shadow-lg animate-slide-down">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <button
+      data-scroll-to="home"
+      class="logo-btn flex items-center gap-2 text-gray-200 font-bold text-xl tracking-wide bg-transparent border-0 cursor-pointer group transition-transform hover:scale-105"
+    >
+      <Hammer class="w-6 h-6 text-yellow-400 group-hover:rotate-12 transition-transform" />
+      <span class="group-hover:text-yellow-400 transition-colors">
+        {t.companyName}
+      </span>
+    </button>
+
+    <!-- Navigation Desktop -->
+    <nav class="hidden md:flex items-center space-x-1">
+      {navItems.map((item) => (
+        <a
+          href={`#${item.id}`}
+          data-nav-link={item.id}
+          class="nav-link relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all"
+        >
+          <item.Icon class="w-4 h-4" />
+          <span>{item.label}</span>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Language Switcher -->
+    <div class="hidden md:flex items-center gap-3">
+      <Globe class="w-4 h-4 text-gray-400" />
+      <div class="flex items-center gap-2">
+        <button
+          data-lang="en"
+          class={`lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all ${
+            lang === 'en' 
+              ? 'bg-yellow-400 text-gray-900' 
+              : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+          }`}
+        >
+          EN
+        </button>
+        <button
+          data-lang="es"
+          class={`lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all ${
+            lang === 'es' 
+              ? 'bg-yellow-400 text-gray-900' 
+              : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+          }`}
+        >
+          ES
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 text-gray-300 hover:text-yellow-400 transition-colors"
+      aria-label="Toggle menu"
+    >
+      <Menu class="menu-icon w-6 h-6" />
+      <X class="close-icon w-6 h-6 hidden" />
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu md:hidden bg-gray-900 border-t border-gray-800 overflow-hidden max-h-0 transition-all duration-300">
+    <nav class="px-6 py-4 space-y-2">
+      {navItems.map((item) => (
+        <a
+          href={`#${item.id}`}
+          data-mobile-nav-link={item.id}
+          class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all"
+        >
+          <item.Icon class="w-5 h-5" />
+          <span>{item.label}</span>
+        </a>
+      ))}
+
+      <!-- Language Switcher Mobile -->
+      <div class="flex items-center gap-3 px-4 py-3 border-t border-gray-800 mt-2 pt-4">
+        <Globe class="w-5 h-5 text-gray-400" />
+        <div class="flex gap-2">
+          <button
+            data-lang-mobile="en"
+            class={`lang-btn-mobile px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              lang === 'en' 
+                ? 'bg-yellow-400 text-gray-900' 
+                : 'text-gray-400 hover:text-gray-200 border border-gray-700'
+            }`}
+          >
+            EN
+          </button>
+          <button
+            data-lang-mobile="es"
+            class={`lang-btn-mobile px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              lang === 'es' 
+                ? 'bg-yellow-400 text-gray-900' 
+                : 'text-gray-400 hover:text-gray-200 border border-gray-700'
+            }`}
+          >
+            ES
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Spacer -->
+<div class="h-16"></div>
+
+<style>
+  @keyframes slide-down {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.5s ease-out;
+  }
+
+  .nav-link.active {
+    color: rgb(250 204 21);
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: rgb(250 204 21);
+  }
+
+  .mobile-nav-link.active {
+    background-color: rgb(250 204 21);
+    color: rgb(17 24 39);
+  }
+
+  .mobile-menu.open {
+    max-height: 500px;
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = mobileMenuBtn?.querySelector('.menu-icon');
+  const closeIcon = mobileMenuBtn?.querySelector('.close-icon');
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('open');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Smooth scroll y cerrar menú móvil
+  document.querySelectorAll('[data-nav-link], [data-mobile-nav-link], [data-scroll-to]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = (e.currentTarget as HTMLElement).getAttribute('data-nav-link') 
+                  || (e.currentTarget as HTMLElement).getAttribute('data-mobile-nav-link')
+                  || (e.currentTarget as HTMLElement).getAttribute('data-scroll-to');
+      
+      if (target) {
+        const element = document.getElementById(target);
+        element?.scrollIntoView({ behavior: 'smooth' });
+        
+        // Cerrar menú móvil
+        mobileMenu?.classList.remove('open');
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
+    });
+  });
+
+  // Cambio de idioma
+  function changeLang(newLang: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', newLang);
+    window.location.href = url.toString();
+  }
+
+  document.querySelectorAll('[data-lang], [data-lang-mobile]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const lang = (e.currentTarget as HTMLElement).getAttribute('data-lang') 
+                || (e.currentTarget as HTMLElement).getAttribute('data-lang-mobile');
+      if (lang) {
+        changeLang(lang);
+      }
+    });
+  });
+
+  // Intersection Observer para active links
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('[data-nav-link]');
+  const mobileNavLinks = document.querySelectorAll('[data-mobile-nav-link]');
+
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '-100px 0px -70% 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        
+        // Desktop
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-nav-link') === id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+        
+        // Mobile
+        mobileNavLinks.forEach(link => {
+          if (link.getAttribute('data-mobile-nav-link') === id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => observer.observe(section));
+</script>
