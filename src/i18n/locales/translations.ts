@@ -92,8 +92,22 @@ export const translations: TranslationsMap = {
       subtitle: "Ready to start your project? Get in touch today!",
       cta: "Call Now",
       email: "Send Email"
-    },
-    testimonials: {
+    },    serviceArea: {
+      title: "Service Area",
+      subtitle: "Proudly Serving Colorado",
+      description: "We provide our professional construction, cleaning, and handyman services throughout the entire state of Colorado. From Denver to Colorado Springs, and everywhere in between.",
+      coverage: "Statewide Coverage",
+      cities: "Major Cities We Serve:",
+      cityList: [
+        "Denver",
+        "Colorado Springs",
+        "Aurora",
+        "Fort Collins",
+        "Boulder",
+        "Pueblo",
+        "And surrounding areas"
+      ]
+    },    testimonials: {
       title: "Testimonials",
       items: [
         {
@@ -210,6 +224,22 @@ export const translations: TranslationsMap = {
       subtitle: "¿Listo para comenzar tu proyecto? ¡Contáctanos hoy!",
       cta: "Llamar Ahora",
       email: "Enviar Email"
+    },
+    serviceArea: {
+      title: "Área de Servicio",
+      subtitle: "Sirviendo con Orgullo a Colorado",
+      description: "Brindamos nuestros servicios profesionales de construcción, limpieza y handyman en todo el estado de Colorado. Desde Denver hasta Colorado Springs, y en todas partes.",
+      coverage: "Cobertura Estatal",
+      cities: "Principales Ciudades que Atendemos:",
+      cityList: [
+        "Denver",
+        "Colorado Springs",
+        "Aurora",
+        "Fort Collins",
+        "Boulder",
+        "Pueblo",
+        "Y áreas circundantes"
+      ]
     },
     testimonials: {
       title: "Testimonios",
