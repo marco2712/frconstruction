@@ -286,15 +286,23 @@ const navItems = [
   }
 
   /* Language menu dropdown */
-  .lang-menu.open {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
-  }
-
   .lang-menu {
     transform: scale(0.95);
     z-index: 60;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  }
+
+  .lang-menu.open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1);
+  }
+
+  .lang-menu-mobile {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
   }
 
   .lang-menu-mobile.open {
@@ -397,10 +405,7 @@ const navItems = [
 
   // Cambio de idioma
   function changeLang(newLang: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('lang', newLang);
-    // Forzar recarga completa sin caché
-    window.location.replace(url.toString());
+    window.location.href = `/${newLang}`;
   }
 
   // Handle desktop language option clicks

@@ -64,6 +64,14 @@ export interface Translations {
     cta: string;
     email: string;
   };
+  serviceArea: {
+    title: string;
+    subtitle: string;
+    description: string;
+    coverage: string;
+    cities: string;
+    cityList: string[];
+  };
   testimonials: {
     title: string;
     items: Testimonial[];
