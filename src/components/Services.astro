@@ -9,55 +9,61 @@ interface Props {
 const { t } = Astro.props;
 
 const services = [
-  { data: t.services.residential, Icon: HomeIcon, accent: 'bg-blue-600' },
-  { data: t.services.construction, Icon: Hammer, accent: 'bg-yellow-500' },
-  { data: t.services.handyman, Icon: Wrench, accent: 'bg-gray-800' },
-  { data: t.services.interior, Icon: Paintbrush, accent: 'bg-blue-700' },
+  { data: t.services.residential, Icon: HomeIcon, accent: 'bg-cyan-dark' },
+  { data: t.services.construction, Icon: Hammer, accent: 'bg-yellow-custom' },
+  { data: t.services.handyman, Icon: Wrench, accent: 'bg-cyan-light' },
+  { data: t.services.interior, Icon: Paintbrush, accent: 'bg-cyan-dark' },
 ];
 ---
 
-<section id="services" class="py-28 bg-black text-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-5xl font-bold mb-6">
-      {t.services.title}
-    </h2>
-    <p class="text-gray-400 mb-16 max-w-xl">
-      <span class="text-yellow-400">{t.tagline}</span>
-    </p>
+<section id="services" class="py-20 bg-[#034942]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-white mb-4">{t.services.title}</h2>
+      <div class="w-24 h-1 bg-yellow-custom mx-auto mb-6"></div>
+      <p class="text-lg text-white/90 max-w-3xl mx-auto">
+        <span class="text-yellow-custom font-semibold">{t.tagline}</span>
+      </p>
+    </div>
 
-    <div class="grid md:grid-cols-4 gap-6">
+    <!-- Services Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       {services.map((service, i) => (
         <div
           data-service-card={i}
-          class="service-card relative overflow-hidden cursor-pointer rounded-3xl p-6 border border-white/10 opacity-80 transition-all hover:scale-105"
+          class="service-card relative overflow-hidden cursor-pointer rounded-2xl p-6 bg-gradient-to-br from-[#045a52] to-[#034a43] border-2 border-yellow-custom/30 hover:border-yellow-custom transition-all duration-300 shadow-lg"
         >
           <!-- Overlay para cards inactivas -->
-          <div class="card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity">
-            <service.Icon class="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-yellow-400 mb-2 sm:mb-3" />
-            <span class="uppercase tracking-widest text-sm text-yellow-400">Click</span>
+          <div class="card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#034a43]/95 backdrop-blur-sm transition-opacity duration-300">
+            <service.Icon class="w-16 h-16 text-yellow-custom mb-3" />
+            <span class="uppercase tracking-widest text-xs text-yellow-custom font-semibold">Ver Servicios</span>
           </div>
 
           <!-- Card Header -->
-          <div class="flex items-center gap-4">
-            <div class={`p-3 rounded-xl ${service.accent}`}>
+          <div class="mb-4">
+            <div class={`w-14 h-14 rounded-xl ${service.accent} flex items-center justify-center mb-4 shadow-lg`}>
               <service.Icon class="w-7 h-7 text-white" />
             </div>
-            <h3 class="text-xl font-semibold">
+            <h3 class="text-xl font-bold text-white">
               {service.data.title}
             </h3>
           </div>
 
           <!-- Expanded Content -->
-          <div class="card-content mt-6 opacity-0 max-h-0 overflow-hidden transition-all">
-            <ul class="space-y-3 text-gray-300">
+          <div class="card-content opacity-0 max-h-0 overflow-hidden transition-all duration-500">
+            <ul class="space-y-2 text-white/90 text-sm mb-4">
               {service.data.items.map((item) => (
-                <li>• {item}</li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-custom mt-1">•</span>
+                  <span>{item}</span>
+                </li>
               ))}
             </ul>
 
             <button
               data-scroll-to="contact"
-              class="mt-6 w-full px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-bold hover:bg-[#045a52] hover:text-white transition"
+              class="mt-4 w-full px-6 py-3 bg-yellow-custom text-cyan-dark rounded-xl font-bold hover:bg-white hover:text-cyan-dark transition-all duration-300 shadow-lg"
             >
               {t.hero.cta}
             </button>
@@ -70,7 +76,7 @@ const services = [
 
 <style>
   .service-card.active {
-    @apply border-yellow-400 scale-105 opacity-100;
+    @apply border-yellow-custom bg-gradient-to-br from-[#045a52] to-[#023832] shadow-2xl;
   }
 
   .service-card.active .card-overlay {
@@ -78,7 +84,11 @@ const services = [
   }
 
   .service-card.active .card-content {
-    @apply opacity-100 max-h-[500px];
+    @apply opacity-100 max-h-[600px];
+  }
+
+  .service-card:not(.active):hover {
+    @apply shadow-xl;
   }
 </style>
 
