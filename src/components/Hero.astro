@@ -10,14 +10,15 @@ const { t } = Astro.props;
 ---
 
 <section id="home" class="relative min-h-screen pt-[12vh] flex items-center justify-center overflow-hidden">
-  <!-- Background image -->
+  <!-- Background image with parallax -->
   <div
-    class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    class="rellax absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
+    data-rellax-speed="-4"
     style="background-image: url('/images/handyman.webp');"
   ></div>
 
   <!-- Dark overlay -->
-  <div class="absolute inset-0 bg-black/40"></div>
+  <div class="absolute inset-0 bg-black/40 z-[1]"></div>
 
   <!-- Content -->
   <div class="container mx-auto px-[5vw] text-center relative z-10 pt-[8vh]">
@@ -46,7 +47,31 @@ const { t } = Astro.props;
   </div>
 </section>
 
+<!-- Rellax.js Library -->
+<script is:inline src="https://cdn.jsdelivr.net/npm/rellax@1.12.1/rellax.min.js"></script>
+
 <script>
+  // Initialize Rellax parallax
+  function initRellax() {
+    if (typeof Rellax !== 'undefined') {
+      new Rellax('.rellax', {
+        speed: -4,
+        center: false,
+        wrapper: null,
+        round: true,
+        vertical: true,
+        horizontal: false
+      });
+    }
+  }
+  
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRellax);
+  } else {
+    initRellax();
+  }
+
   // Smooth scroll para el botón CTA
   document.querySelectorAll('[data-scroll-to]').forEach(button => {
     button.addEventListener('click', (e) => {
@@ -58,3 +83,9 @@ const { t } = Astro.props;
     });
   });
 </script>
+
+<style>
+  .rellax {
+    will-change: transform;
+  }
+</style>
