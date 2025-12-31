@@ -17,33 +17,30 @@ const { t } = Astro.props;
   ></div>
 
   <!-- Dark overlay -->
-  <div class="absolute inset-0 bg-black/30"></div>
-
-  <!-- Gradient overlay -->
-  <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40"></div>
+  <div class="absolute inset-0 bg-black/40"></div>
 
   <!-- Content -->
   <div class="container mx-auto px-[5vw] text-center relative z-10 pt-[8vh]">
     <div class="animate-fade-in">
-      <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+      <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
         {t.hero.title}
       </h1>
 
-      <p class="text-xl md:text-2xl text-gray-200 mb-4">
+      <p class="text-xl md:text-2xl text-gray-200 mb-4 drop-shadow-md">
         {t.tagline}
       </p>
 
-      <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto drop-shadow-md">
         {t.hero.subtitle}
       </p>
 
       <button
         data-scroll-to="contact"
-        class="group px-8 py-4 cta-btn rounded-lg font-bold text-lg hover:bg-yellow-500 transition transform hover:scale-105 inline-flex items-center space-x-2"
+        class="group px-8 py-4 bg-yellow-custom hover:bg-[#045a52] hover:text-white text-cyan-dark rounded-xl font-bold text-lg transition-all duration-300 inline-flex items-center gap-3 shadow-xl"
         aria-label={t.hero.cta}
       >
         <span>{t.hero.cta}</span>
-        <Phone class="w-5 h-5 group-hover:rotate-12 transition-transform" />
+        <Phone class="w-5 h-5 transition-transform duration-300" />
       </button>
     </div>
   </div>

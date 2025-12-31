@@ -5,19 +5,20 @@
 /* CTA Button - stays visible under dark themes */
 .cta-btn {
   color-scheme: light;
-  background-color: #facc15 !important; /* yellow-400 */
-  color: #111827 !important; /* gray-900 */
+  background-color: #FFC519 !important; /* yellow-custom */
+  color: #067f75 !important; /* cyan-dark */
   mix-blend-mode: normal;
 }
 
 .cta-btn:hover {
-  background-color: #fbbf24 !important; /* yellow-500 */
+  background-color: #045a52 !important; /* dark green */
+  color: #ffffff !important;
 }
 
 @media (prefers-color-scheme: dark) {
   .cta-btn {
-    background-color: #fde047 !important; /* yellow-300 for better contrast on dark */
-    color: #111827 !important;
+    background-color: #FFC519 !important; /* yellow-custom */
+    color: #067f75 !important;
   }
 }
 
