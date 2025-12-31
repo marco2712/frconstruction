@@ -2,7 +2,7 @@ import type { TranslationsMap } from '../types';
 
 export const translations: TranslationsMap = {
   en: {
-    companyName: "Golden Hand Services",
+    companyName: "FER Handy",
     tagline: "One Call. We Handle It All.",
     nav: {
       home: "Home",
@@ -18,7 +18,7 @@ export const translations: TranslationsMap = {
     },
     about: {
       title: "About Us",
-      description: "Golden Hand Services is your trusted partner for residential and commercial cleaning, repairs, and construction services. With years of experience, we offer comprehensive solutions for all your property needs, from small repairs to large-scale projects."
+      description: "FER Handy is your trusted partner for residential and commercial cleaning, repairs, and construction services. With years of experience, we offer comprehensive solutions for all your property needs, from small repairs to large-scale projects."
     },
     services: {
       title: "Our Services",
@@ -120,7 +120,7 @@ export const translations: TranslationsMap = {
     }
   },
   es: {
-    companyName: "Golden Hand Services",
+    companyName: "FER Handy",
     tagline: "Una sola llamada. Nosotros nos encargamos de todo",
     nav: {
       home: "Inicio",
@@ -136,7 +136,7 @@ export const translations: TranslationsMap = {
     },
     about: {
       title: "Sobre Nosotros",
-      description: "Golden Hand Services es tu socio de confianza para servicios de limpieza, reparaciones y construcción residencial y comercial. Con años de experiencia, ofrecemos soluciones integrales para todas las necesidades de tu propiedad, desde pequeñas reparaciones hasta proyectos a gran escala."
+      description: "FER Handy es tu socio de confianza para servicios de limpieza, reparaciones y construcción residencial y comercial. Con años de experiencia, ofrecemos soluciones integrales para todas las necesidades de tu propiedad, desde pequeñas reparaciones hasta proyectos a gran escala."
     },
     services: {
       title: "Nuestros Servicios",
