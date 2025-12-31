@@ -16,7 +16,8 @@ const { t } = Astro.props;
       <div class="w-24 h-1 bg-gradient-to-r from-cyan-dark to-cyan-light mx-auto"></div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <!-- Desktop View (Grid) -->
+    <div class="hidden md:grid md:grid-cols-2 gap-8">
       {t.testimonials.items.map((testimonial) => (
         <div class="testimonial-card bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
           <div class="flex items-start gap-4 mb-6">
@@ -43,6 +44,67 @@ const { t } = Astro.props;
         </div>
       ))}
     </div>
+
+    <!-- Mobile View (Carousel) -->
+    <div class="md:hidden relative">
+      <div class="testimonials-carousel overflow-hidden">
+        <div class="testimonials-track flex transition-transform duration-500 ease-out">
+          {t.testimonials.items.map((testimonial, index) => (
+            <div class="testimonial-slide w-full flex-shrink-0 px-2">
+              <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <div class="flex items-start gap-3 mb-4">
+                  <Quote class="w-10 h-10 text-cyan-dark/20 flex-shrink-0" />
+                  <div class="flex-1">
+                    <p class="text-gray-700 text-base leading-relaxed italic">"{testimonial.quote}"</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-dark to-cyan-light flex items-center justify-center text-white font-bold text-base">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p class="font-semibold text-gray-900 text-sm">{testimonial.name}</p>
+                    <div class="flex gap-1 mt-1">
+                      {[...Array(5)].map((_, i) => (
+                        <svg class="w-3.5 h-3.5 text-yellow-custom fill-current" viewBox="0 0 20 20">
+                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Carousel Navigation -->
+      <div class="flex items-center justify-center gap-4 mt-6">
+        <button id="testimonials-prev" class="w-10 h-10 rounded-full bg-cyan-dark text-white hover:bg-[#045a52] transition-colors duration-300 flex items-center justify-center shadow-md disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Previous testimonial">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        
+        <!-- Dots Indicators -->
+        <div class="flex gap-2" id="testimonials-dots">
+          {t.testimonials.items.map((_, index) => (
+            <button 
+              class="testimonial-dot w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300 hover:bg-cyan-dark"
+              data-index={index}
+              aria-label={`Go to testimonial ${index + 1}`}
+            ></button>
+          ))}
+        </div>
+
+        <button id="testimonials-next" class="w-10 h-10 rounded-full bg-cyan-dark text-white hover:bg-[#045a52] transition-colors duration-300 flex items-center justify-center shadow-md disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Next testimonial">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -61,4 +123,108 @@ const { t } = Astro.props;
       transform: translateY(0);
     }
   }
+
+  .testimonial-dot.active {
+    background-color: #067f75;
+    width: 1.5rem;
+  }
 </style>
+
+<script>
+  // Carousel functionality for mobile
+  const track = document.querySelector('.testimonials-track') as HTMLElement;
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const prevBtn = document.getElementById('testimonials-prev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('testimonials-next') as HTMLButtonElement;
+  const dots = document.querySelectorAll('.testimonial-dot');
+  
+  let currentIndex = 0;
+  const totalSlides = slides.length;
+
+  function updateCarousel() {
+    // Update track position
+    const offset = -currentIndex * 100;
+    track.style.transform = `translateX(${offset}%)`;
+
+    // Update dots
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+
+    // Update button states
+    if (prevBtn && nextBtn) {
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalSlides - 1;
+    }
+  }
+
+  // Previous button
+  prevBtn?.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  // Next button
+  nextBtn?.addEventListener('click', () => {
+    if (currentIndex < totalSlides - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  // Dot navigation
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  track?.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  track?.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+  });
+
+  track?.addEventListener('touchend', () => {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0 && currentIndex < totalSlides - 1) {
+        // Swipe left - next
+        currentIndex++;
+        updateCarousel();
+      } else if (diff < 0 && currentIndex > 0) {
+        // Swipe right - previous
+        currentIndex--;
+        updateCarousel();
+      }
+    }
+  });
+
+  // Initialize
+  updateCarousel();
+
+  // Auto-play (optional - uncomment if desired)
+  // setInterval(() => {
+  //   if (currentIndex < totalSlides - 1) {
+  //     currentIndex++;
+  //   } else {
+  //     currentIndex = 0;
+  //   }
+  //   updateCarousel();
+  // }, 5000);
+</script>
