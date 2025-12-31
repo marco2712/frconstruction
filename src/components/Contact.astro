@@ -9,47 +9,90 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section id="contact" class="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white">
-  <div class="container mx-auto px-[5vw] text-center">
-    <h2 class="text-4xl md:text-5xl font-bold mb-6">{t.contact.title}</h2>
-    <p class="text-xl text-gray-300 mb-12">{t.contact.subtitle}</p>
-    
-    <div class="flex flex-col md:flex-row items-center justify-center space-y-[1.2vw] md:space-y-0 md:space-x-[1.5vw] mb-[3vw]">
+<section class="py-20 bg-gradient-to-br from-cyan-dark via-cyan-light to-cyan-dark text-white" id="contact">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Header */}
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">{t.contact.title}</h2>
+      <div class="w-24 h-1 bg-yellow-custom mx-auto mb-6"></div>
+      <p class="text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+        {t.contact.subtitle}
+      </p>
+    </div>
+
+    {/* Contact Methods */}
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      {/* Phone */}
       <a 
-        href="tel:+1234567890" 
-        class="group px-8 py-4 bg-yellow-400 text-gray-900 rounded-lg font-bold text-lg hover:bg-yellow-500 transition transform hover:scale-105 inline-flex items-center space-x-2"
-        aria-label="Call us"
+        href="tel:+573001234567" 
+        class="contact-card bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-white/20 hover:border-[#045a52] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+      >
+        <div class="w-16 h-16 rounded-xl bg-yellow-custom flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+          <Phone class="w-8 h-8 text-cyan-dark" />
+        </div>
+        <h3 class="text-xl font-bold mb-2">{t.contact.cta}</h3>
+        <p class="text-white/80 text-lg font-semibold mb-2">+57 300 123 4567</p>
+        <p class="text-white/60 text-sm">Available 24/7</p>
+      </a>
+
+      {/* Email */}
+      <a 
+        href="mailto:info@ferhandy.com" 
+        class="contact-card bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-white/20 hover:border-[#045a52] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+      >
+        <div class="w-16 h-16 rounded-xl bg-yellow-custom flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+          <Mail class="w-8 h-8 text-cyan-dark" />
+        </div>
+        <h3 class="text-xl font-bold mb-2">{t.contact.email}</h3>
+        <p class="text-white/80 text-lg font-semibold mb-2">info@ferhandy.com</p>
+        <p class="text-white/60 text-sm">Response within 24h</p>
+      </a>
+
+      {/* Location */}
+      <div class="contact-card bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-white/20 transition-all duration-300">
+        <div class="w-16 h-16 rounded-xl bg-yellow-custom flex items-center justify-center mb-6">
+          <MapPin class="w-8 h-8 text-cyan-dark" />
+        </div>
+        <h3 class="text-xl font-bold mb-2">Location</h3>
+        <p class="text-white/80 text-lg font-semibold mb-2">Cali, Colombia</p>
+        <p class="text-white/60 text-sm">Valle del Cauca</p>
+      </div>
+    </div>
+
+    {/* CTA Buttons */}
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a 
+        href="tel:+573001234567"
+        class="inline-flex items-center gap-3 bg-yellow-custom hover:bg-[#045a52] hover:text-white text-cyan-dark font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
       >
         <Phone class="w-5 h-5" />
         <span>{t.contact.cta}</span>
       </a>
+      
       <a 
-        href="mailto:info@frconstruction.com" 
-        class="group px-8 py-4 bg-white text-gray-900 rounded-lg font-bold text-lg hover:bg-gray-100 transition transform hover:scale-105 inline-flex items-center space-x-2"
-        aria-label="Send us an email"
+        href="mailto:info@ferhandy.com"
+        class="inline-flex items-center gap-3 bg-white hover:bg-[#045a52] hover:text-white text-cyan-dark font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
       >
         <Mail class="w-5 h-5" />
         <span>{t.contact.email}</span>
       </a>
     </div>
-
-    <div class="max-w-2xl mx-auto space-y-4 text-gray-300">
-      <div class="flex items-center justify-center space-x-3">
-        <Phone class="w-6 h-6 text-yellow-400" />
-        <a href="tel:+1234567890" class="text-lg hover:text-yellow-400 transition">
-          +1 (234) 567-8900
-        </a>
-      </div>
-      <div class="flex items-center justify-center space-x-3">
-        <Mail class="w-6 h-6 text-yellow-400" />
-        <a href="mailto:info@frconstruction.com" class="text-lg hover:text-yellow-400 transition">
-          info@frconstruction.com
-        </a>
-      </div>
-      <div class="flex items-center justify-center space-x-3">
-        <MapPin class="w-6 h-6 text-yellow-400" />
-        <span class="text-lg">Cali, Valle del Cauca, Colombia</span>
-      </div>
-    </div>
   </div>
 </section>
+
+<style>
+  .contact-card {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
