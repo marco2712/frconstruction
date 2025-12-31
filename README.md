@@ -1,4 +1,8 @@
-# FR Construction - Astro Website
+<div align="center">
+  <img src="public/images/logo-main.png" alt="FER Handy Logo" width="200"/>
+</div>
+
+# FER Handy - Astro Website
 
 Sitio web profesional para servicios de construcción y mantenimiento, construido con **Astro** y **Tailwind CSS**.
 
@@ -106,4 +110,4 @@ Las imágenes deben colocarse en la carpeta `public/images/`.
 
 ## Licencia
 
-Privado - © 2025 Golden Hand Services
+Privado - © 2025 FER Handy
