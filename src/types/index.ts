@@ -63,6 +63,18 @@ export interface Translations {
     subtitle: string;
     cta: string;
     email: string;
+    form: {
+      name: string;
+      phone: string;
+      email: string;
+      service: string;
+      other: string;
+      specifyWarning: string;
+      message: string;
+      submit: string;
+      success: string;
+      error: string;
+    };
   };
   serviceArea: {
     title: string;

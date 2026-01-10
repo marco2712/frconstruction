@@ -23,6 +23,30 @@ Sitio web profesional para servicios de construcción y mantenimiento, construid
 npm install
 ```
 
+## Contact Form Email Setup
+
+To enable the new contact form to send emails, configure SMTP credentials via environment variables.
+
+1. Create a `.env` file at the project root (use `.env.example` as a template).
+2. Add your SMTP provider values:
+
+```
+SMTP_HOST=smtp.yourprovider.com
+SMTP_PORT=587
+SMTP_USER=your_username
+SMTP_PASS=your_password
+MAIL_TO=info@ferhandy.com
+MAIL_FROM=notifications@ferhandy.com
+```
+
+3. Install dependencies and run the dev server:
+
+```
+npm install
+npm run dev
+```
+
+The contact form posts to `/api/contact` and sends an email with the submitted details.
 2. **Ejecutar en desarrollo:**
 
 ```bash

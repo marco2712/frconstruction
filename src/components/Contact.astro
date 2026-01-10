@@ -7,6 +7,13 @@ interface Props {
 }
 
 const { t } = Astro.props;
+
+const serviceOptions: string[] = [
+  ...t.services.residential.items,
+  ...t.services.construction.items,
+  ...t.services.handyman.items,
+  ...t.services.interior.items,
+];
 ---
 
 <section class="py-20 bg-gradient-to-br from-cyan-dark via-cyan-light to-cyan-dark text-white" id="contact">
@@ -39,6 +46,7 @@ const { t } = Astro.props;
       <a 
         href="mailto:info@ferhandy.com" 
         class="contact-card bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-white/20 hover:border-[#045a52] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+        data-toggle-form="true"
       >
         <div class="w-16 h-16 rounded-xl bg-yellow-custom flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
           <Mail class="w-8 h-8 text-cyan-dark" />
@@ -72,10 +80,53 @@ const { t } = Astro.props;
       <a 
         href="mailto:info@ferhandy.com"
         class="inline-flex items-center gap-3 bg-white hover:bg-[#045a52] hover:text-white text-cyan-dark font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+        data-toggle-form="true"
       >
         <Mail class="w-5 h-5" />
         <span>{t.contact.email}</span>
       </a>
+    </div>
+
+    {/* Contact Form */}
+    <div id="form-container" class="mt-16 max-w-3xl mx-auto hidden">
+      <form id="contact-form" class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border-2 border-white/20">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold mb-2">{t.contact.form.name}</label>
+            <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl bg-white/80 text-cyan-dark placeholder-cyan-dark/70 focus:outline-none focus:ring-2 focus:ring-yellow-custom" placeholder="John Doe" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2">{t.contact.form.phone}</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl bg-white/80 text-cyan-dark placeholder-cyan-dark/70 focus:outline-none focus:ring-2 focus:ring-yellow-custom" placeholder="(720) 555-0123" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2">{t.contact.form.email}</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-white/80 text-cyan-dark placeholder-cyan-dark/70 focus:outline-none focus:ring-2 focus:ring-yellow-custom" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2">{t.contact.form.service}</label>
+            <select id="service-select" name="service" required class="w-full px-4 py-3 rounded-xl bg-white/80 text-cyan-dark focus:outline-none focus:ring-2 focus:ring-yellow-custom">
+              <option value="" disabled selected>{t.contact.form.service}</option>
+              {serviceOptions.map((s) => (
+                <option value={s}>{s}</option>
+              ))}
+              <option value="__other__">{t.contact.form.other}</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-6">
+          <p id="service-warning" class="mb-2 text-sm text-yellow-300 hidden">{t.contact.form.specifyWarning}</p>
+          <label class="block text-sm font-semibold mb-2">{t.contact.form.message}</label>
+          <textarea name="message" rows="4" class="w-full px-4 py-3 rounded-xl bg-white/80 text-cyan-dark placeholder-cyan-dark/70 focus:outline-none focus:ring-2 focus:ring-yellow-custom" placeholder="{t.contact.form.message}"></textarea>
+        </div>
+        <div class="mt-8 flex items-center gap-4">
+          <button type="submit" class="inline-flex items-center gap-3 bg-yellow-custom hover:bg-[#045a52] hover:text-white text-cyan-dark font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <Mail class="w-5 h-5" />
+            <span>{t.contact.form.submit}</span>
+          </button>
+          <span id="form-status" class="text-white/90"></span>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -96,3 +147,63 @@ const { t } = Astro.props;
     }
   }
 </style>
+
+<script>
+  const formContainer = document.getElementById('form-container');
+  const toggleEls = document.querySelectorAll('[data-toggle-form="true"]');
+  toggleEls.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (formContainer) {
+        formContainer.classList.toggle('hidden');
+        formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  const form = document.getElementById('contact-form');
+  const statusEl = document.getElementById('form-status');
+  const serviceSelect = document.getElementById('service-select');
+  const serviceWarning = document.getElementById('service-warning');
+
+  const updateOtherServiceVisibility = () => {
+    const isOther = serviceSelect && serviceSelect.value === '__other__';
+    if (!serviceWarning) return;
+    serviceWarning.classList.toggle('hidden', !isOther);
+  };
+
+  if (serviceSelect) {
+    serviceSelect.addEventListener('change', updateOtherServiceVisibility);
+  }
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Sending…';
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        service: formData.get('service'),
+        message: formData.get('message') || '',
+      };
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          statusEl.textContent = `${Astro.props.t.contact.form.success}`;
+          form.reset();
+          updateOtherServiceVisibility();
+        } else {
+          statusEl.textContent = `${Astro.props.t.contact.form.error}`;
+        }
+      } catch (err) {
+        statusEl.textContent = `${Astro.props.t.contact.form.error}`;
+      }
+    });
+  }
+</script>

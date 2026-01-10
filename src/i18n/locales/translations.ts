@@ -91,7 +91,19 @@ export const translations: TranslationsMap = {
       title: "Contact Us",
       subtitle: "Ready to start your project? Get in touch today!",
       cta: "Call Now",
-      email: "Send Email"
+      email: "Send Email",
+      form: {
+        name: "Name",
+        phone: "Phone Number",
+        email: "Email",
+        service: "Service Needed",
+        other: "Other",
+        specifyWarning: "Please specify the service",
+        message: "Additional Details",
+        submit: "Send Request",
+        success: "Thanks! We've received your request and will contact you soon.",
+        error: "Something went wrong. Please try again.",
+      }
     },    serviceArea: {
       title: "Service Area",
       subtitle: "Proudly Serving Colorado",
@@ -223,7 +235,19 @@ export const translations: TranslationsMap = {
       title: "Contáctanos",
       subtitle: "¿Listo para comenzar tu proyecto? ¡Contáctanos hoy!",
       cta: "Llamar Ahora",
-      email: "Enviar Email"
+      email: "Enviar Email",
+      form: {
+        name: "Nombre",
+        phone: "Número de teléfono",
+        email: "Correo electrónico",
+        service: "Servicio requerido",
+        other: "Otro",
+        specifyWarning: "Por favor especifica el servicio",
+        message: "Detalles adicionales",
+        submit: "Enviar solicitud",
+        success: "¡Gracias! Hemos recibido tu solicitud y te contactaremos pronto.",
+        error: "Algo salió mal. Inténtalo de nuevo.",
+      }
     },
     serviceArea: {
       title: "Área de Servicio",
