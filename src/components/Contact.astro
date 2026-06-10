@@ -238,14 +238,18 @@ const serviceOptions: string[] = [
   const toggleEls = document.querySelectorAll('[data-toggle-form="true"]');
 
   const openModal = () => {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
     document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
     document.body.style.overflow = '';
   };
 
@@ -256,16 +260,18 @@ const serviceOptions: string[] = [
     });
   });
 
-  overlay.addEventListener('click', closeModal);
-  closeBtn.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', closeModal);
+  closeBtn?.addEventListener('click', closeModal);
 
-  const serviceSelect = document.getElementById('service-select');
+  const serviceSelect = document.getElementById('service-select') as HTMLSelectElement | null;
   const serviceWarning = document.getElementById('service-warning');
 
   serviceSelect?.addEventListener('change', () => {
-    serviceWarning.classList.toggle(
-      'hidden',
-      serviceSelect.value !== '__other__'
-    );
+    if (serviceSelect && serviceWarning) {
+      serviceWarning.classList.toggle(
+        'hidden',
+        serviceSelect.value !== '__other__'
+      );
+    }
   });
 </script>

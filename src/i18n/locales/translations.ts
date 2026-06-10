@@ -1,4 +1,4 @@
-import type { TranslationsMap } from '../types';
+import type { TranslationsMap } from '../../types';
 
 export const translations: TranslationsMap = {
   en: {
